@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="page-header">Promise 初体验</h2>
+        <button class="btn btn-primary" id="btn">点击抽奖</button>
+    </div>
+
+    <script>
+        const btnEle = document.getElementById('btn');
+
+        btnEle.addEventListener('click', () => {
+            // Promise 封装异步操作
+            const p = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let n = rand(1, 100);
+                    if (n <= 30) {
+                        resolve(n);
+                    } else {
+                        reject(n);
+                    }
+                }, 1000);
+            });
+
+            p.then((value) => {
+                alert("Bingo! your lucky number is:" + value)
+            }, (reason) => {
+                alert('Sorry~' + reason)
+            });
+           
+
+        });
+
+        // 随机函数
+        function rand(m, n) {
+            return Math.ceil(Math.random() * (n - m + 1)) + m - 1;
+        }
+    </script>
+</body>
+
+</html>

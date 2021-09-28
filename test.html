@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Hello~</h2>
+    <script src="./05-promise-handler.js"></script>
+    <script>
+        // let p = new Promise((resolve, reject) => {
+        //     // resolve('success')
+        //     // console.log(111);
+        //     // reject('error')
+        //     // 抛出异常
+        //     // throw 'err'
+
+        //     // 异步情况下
+        //     setTimeout(() => {
+        //         resolve('success');
+        //         // reject('No~')
+        //         console.log(11);
+        //     }, 1000);
+        // })
+
+        // p.then(value => {
+        //     console.log(value);
+        // }, reason => {
+        //     console.warn(reason);
+        // })
+
+        // console.log(333);
+
+        async function main() {
+            // return 521;
+            // return new Promise((resolve, reject) => {
+            //     reject('No');
+            //     // resolve('OK')
+            // })
+            throw "error"
+        }
+
+        let res = main();
+        console.log(res);
+    </script>
+</body>
+
+</html>

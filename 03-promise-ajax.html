@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise 封装 Ajax</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="page-header">Promise 封装Ajax请求</h2>
+        <button class="btn btn-primary" id="btn">点击发送Ajax</button>
+    </div>
+
+    <script>
+        // https://api.apiopen.top/getJoke
+        const btnEle = document.querySelector('#btn');
+
+        btnEle.addEventListener('click', () => {
+
+            const p = new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://api.apiopen.top/getJoke');
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(xhr.response);
+                        } else {
+                            reject(xhr.status);
+                        }
+                    }
+                }
+            });
+
+            p.then((value) => {
+                console.log(value);
+            }, (reason) => {
+                console.warn(reason);
+            });
+
+            console.log(p);
+        })
+ 
+
+        // 封装ajax, 以 get 方法为例
+        function sendAjax(url) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('get', url);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(xhr.response);
+                        } else {
+                            reject(xhr.status);
+                        }
+                    }
+                }
+            })
+        }
+
+        // sendAjax('https://api.apiopen.top/getJoke')
+        // .then(value => {
+        //     console.log(value);
+        // }, reason => {
+        //     console.log(reason);
+        // })
+    </script>
+</body>
+
+</html>

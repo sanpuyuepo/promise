@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="page-header">async/await 发送Ajax请求</h2>
+        <button class="btn btn-primary" id="btn">点击发送Ajax</button>
+    </div>
+
+    <script>
+        const btnEle = document.querySelector('#btn');
+
+        btnEle.addEventListener('click', async () => {
+            try {
+                let joke = await axios({
+                    method:'get',
+                    url: 'https://cdn.mdeer.com/data/yqstaticdata.js',  
+                })
+                console.log(joke);
+            } catch (error) {
+                console.log(error);
+            }
+
+        })
+    </script>
+</body>
+
+</html>
