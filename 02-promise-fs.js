@@ -1,13 +1,13 @@
 const fs = require('fs');
 
 // 回调形式
-/* fs.readFile('db.json', (err, data) => {
-    if (err) {
-        throw err;
-    }
-    console.log(data.toString());
-});
- */
+// fs.readFile('db.json', (err, data) => {
+//     if (err) {
+//         throw err;
+//     }
+//     console.log(JSON.parse(data));
+// });
+
 
 // promise 形式
 let p = new Promise((resolve, reject) => {
@@ -22,6 +22,6 @@ let p = new Promise((resolve, reject) => {
 p.then( value => {
     console.log(value.toString());
 }, reason => {
-    console.log("path wrong~");
+    console.log("path wrong!!!");
     console.log(reason);
 })
