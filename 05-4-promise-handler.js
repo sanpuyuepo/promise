@@ -25,8 +25,7 @@ function Promise(executor) {
         _this.PromiseState = PROMISE_STATE_FULFILLED;
         // 2.修改结果
         _this.PromiseResult = param;
-        // 3. 调用成功的回调
-        // ?存在多个回调的情况
+        // ?调用成功的回调
         _this.callbacks.forEach(item => {
             item.onResolved(param);
         });
@@ -40,8 +39,7 @@ function Promise(executor) {
         _this.PromiseState = PROMISE_STATE_REJECTED;
         // 2.修改结果
         _this.PromiseResult = param;
-        // 3. 调用失败的回调
-        // ?存在多个回调的情况下调用回调
+        // ?调用失败的回调
         _this.callbacks.forEach(item => {
             item.onRejected(param);
         });
@@ -82,7 +80,23 @@ Promise.prototype.then = function (onResolved, onRejected) {
             }
         }
         if (this.PromiseState === PROMISE_STATE_REJECTED) {
-            onRejected(this.PromiseResult);
+            try {
+                let res = onRejected(this.PromiseResult);
+                if (res instanceof Promise) {
+                    res.then(
+                        v => {
+                            resolve(v);
+                        },
+                        r => {
+                            reject(r);
+                        }
+                    );
+                } else {
+                    resolve(res);
+                }
+            } catch (e) {
+                reject(e);
+            }
         }
         // ! pending 状态，处于异步任务中
         if (this.PromiseState === PROMISE_STATE_PENDING) {

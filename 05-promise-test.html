@@ -8,28 +8,27 @@
 </head>
 <body>
     
-    <script src="./05-4-promise-handler.js"></script>
+    <script src="./05-7-promise-handler.js"></script>
     <script>
         let p = new Promise((resolve, reject) => {
-            resolve('OK');
+            resolve('ok');
             // reject('err')
             // throw 'error'
 
             //异步情况
             // setTimeout(() => {
-            //     // resolve('Okay')
-            //     reject('Err!')
-            // }, 1000);
+            //     // resolve('Okay' )
+            //     // reject('Err!')
+            // }, 100);
 
         })
 
-        const res = p.then((value) => {
-            console.log(value);
-        }, (reason) => {
-            console.warn(reason); 
-        })
+        console.log(p);
 
-        console.log(res);
+        // let res = p.catch(reason => {
+        //     console.warn(reason);
+        // });
+        // console.log(res);
     </script>
 </body>
 </html>
