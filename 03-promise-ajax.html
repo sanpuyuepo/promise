@@ -51,6 +51,7 @@
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 xhr.open('get', url);
+                // xhr.responseType = 'json'
                 xhr.send();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
@@ -63,13 +64,6 @@
                 }
             })
         }
-
-        // sendAjax('https://api.apiopen.top/getJoke')
-        // .then(value => {
-        //     console.log(value);
-        // }, reason => {
-        //     console.log(reason);
-        // })
     </script>
 </body>
 
