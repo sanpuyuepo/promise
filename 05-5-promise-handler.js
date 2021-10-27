@@ -1,5 +1,5 @@
 // 手写promise
-class Promise {
+class MyPromise {
 
     constructor(executor) {
         // 添加属性
@@ -21,9 +21,7 @@ class Promise {
                         item.onResolved(param)
                     })
                 });
-
             }
-
         }
 
         function reject(param) {
@@ -47,7 +45,6 @@ class Promise {
         } catch (e) {
             reject(e)
         }
-
     }
 
     // then()
@@ -64,12 +61,12 @@ class Promise {
 
         const self = this;
 
-        return new Promise((resolve, reject) => {
+        return new MyPromise((resolve, reject) => {
             // 封装函数
             function callback(type) {
                 try {
                     let result = type(self.promiseResult);
-                    if (result instanceof Promise) {
+                    if (result instanceof MyPromise) {
                         result.then(v => {
                             resolve(v)
                         }, r => {
@@ -81,8 +78,8 @@ class Promise {
                 } catch (error) {
                     reject(error)
                 }
-
             }
+
             if (this.promiseState === 'fulfilled') {
                 setTimeout(() => {
                     callback(onResolved);
@@ -120,8 +117,8 @@ class Promise {
     // 静态方法
     // resolve()
     static resolve(value) {
-        return new Promise((resolve, reject) => {
-            if (value instanceof Promise) {
+        return new MyPromise((resolve, reject) => {
+            if (value instanceof MyPromise) {
                 value.then(v => {
                     resolve(v);
                 }, r => {
@@ -135,17 +132,20 @@ class Promise {
 
     // reject()
     static reject(reason) {
-        return new Promise((resolve, reject) => {
+        return new MyPromise((resolve, reject) => {
             reject(reason);
         })
     }
 
     // all()
     static all(promises) {
-        return new Promise((resolve, reject) => {
+        return new MyPromise((resolve, reject) => {
             let counter = 0;
             let result = [];
             for (let i = 0; i < promises.length; i++) {
+                if (promises[i] instanceof MyPromise) {
+                    
+                }
                 promises[i].then(v => {
                     counter++;
                     arr[i] = v;
@@ -161,7 +161,7 @@ class Promise {
 
     // race()
     static race(promises) {
-        return new Promise((resolve, reject) => {
+        return new MyPromise((resolve, reject) => {
             for (let i = 0; i < promises.length; i++) {
                 promises[i].then(v => {
                     resolve(v);
