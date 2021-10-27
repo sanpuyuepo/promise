@@ -2,7 +2,6 @@ const PENDING = 'pending';
 const FULFILLED = 'fulfilled';
 const REJECTED = 'rejected';
 
-// 使用箭头函数
 class MyPromise {
     constructor(executor) {
         try {
@@ -47,7 +46,9 @@ class MyPromise {
 
         // 参数判断
         onResolved = onResolved && typeof onResolved === 'function' ? onResolved : value => value;
-        onRejected = onRejected && typeof onRejected === 'function' ? onRejected : reason => {throw reason};
+        onRejected = onRejected && typeof onRejected === 'function' ? onRejected : reason => {
+            throw reason
+        };
 
         let promise = new MyPromise((resolve, reject) => {
             if (this.promiseState === FULFILLED) {
@@ -96,21 +97,63 @@ class MyPromise {
         return promise;
     }
 
+    catch(onRejected) {
+        return this.then(undefined, onRejected);
+    }
+
+    finally(onFinally) {
+        return this.then(value => {
+            return MyPromise.resolve(onFinally()).then(() => value)
+        }, reason => {
+            return MyPromise.resolve(onFinally()).then(() => {throw reason});
+        })
+    }
+
+    static resolve(value) {
+        if (value instanceof MyPromise) return value;
+        return new MyPromise(resolve => resolve(value));
+    }
+
     static all(promises) {
         let result = [];
+        let index = 0
         return new MyPromise((resolve, reject) => {
-            for(let i = 0; i < promises.length; i++) {
+            setTimeout(() => {
+
+            }, 0);
+            for (let i = 0; i < promises.length; i++) {
                 let current = promises[i];
                 if (current instanceof MyPromise) {
                     // promise对象
                     current.then(value => {
-                        
+                        result[i] = value;
+                        index++;
+                        if (index === promises.length) {
+                            resolve(result);
+                        }
                     }, reason => {
                         reject(reason);
                     })
                 } else {
                     // 普通值
+                    result[i] = current;
+                    index++;
+                    if (index === promises.length) {
+                        resolve(result);
+                    }
                 }
+            }
+        })
+    }
+
+    static race(promises) {
+        return new Promise((resolve, reject) => {
+            for (let i = 0; i < promises.length; i++) {
+                promises[i].then(v => {
+                    resolve(v);
+                }, r => {
+                    reject(r);
+                })
             }
         })
     }
@@ -134,4 +177,3 @@ function resolvePromise(promise, x, resolve, reject) {
         resolve(x);
     }
 }
-

@@ -161,7 +161,7 @@ class Promise {
                     counter++;
                     result[i] = v; // * 不适用push，使用数组下标保证结果顺序和传入的promises顺序一致
                     // ! 所有的promises成功才将返回的promise对象改变状态
-                    if (counter === promises.length) {
+                    if (counter === promises.length) {  
                         resolve(result);
                     }
                 }, r => {
