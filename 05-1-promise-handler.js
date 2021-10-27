@@ -13,13 +13,3 @@ function Promise(executor) {
     }
     executor(resolve, reject);
 }
-
-// 添加实例方法: then, catch, finally
-// 1.then
-Promise.prototype.then = function(onResolved, onRejected) {
-     
-}
-// 2. catch
-Promise.prototype.catch = function() {}
-// 3. finally
-Promise.prototype.finally = function() {}

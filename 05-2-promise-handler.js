@@ -15,7 +15,7 @@ function Promise(executor) {
     const _this = this;
     // * resolve, reject: 改变状态，设置结果值
     function resolve(param) {
-        // todo 改变前需要判断状态
+        // 判断状态
         if (_this.PromiseState != PROMISE_STATE_PENDING) {
             return;
         }
@@ -23,6 +23,7 @@ function Promise(executor) {
         _this.PromiseState = PROMISE_STATE_FULFILLED;
         // 2.修改结果
         _this.PromiseResult = param;
+        // todo 调用回调
     }
 
     function reject(param) {
@@ -33,6 +34,7 @@ function Promise(executor) {
         _this.PromiseState = PROMISE_STATE_REJECTED;
         // 2.修改结果
         _this.PromiseResult = param;
+        // todo 调用回调
     }
 
     // ! 考虑的抛出异常的情况
@@ -44,11 +46,3 @@ function Promise(executor) {
     }
     
 }
-// 1.then
-Promise.prototype.then = function(onResolved, onRejected) {
-     
-}
-// 2. catch
-Promise.prototype.catch = function() {}
-// 3. finally
-Promise.prototype.finally = function() {}
